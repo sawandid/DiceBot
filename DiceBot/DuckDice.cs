@@ -20,7 +20,7 @@ namespace DiceBot
         DateTime lastupdate = new DateTime();
         HttpClient Client;
         HttpClientHandler ClientHandlr;
-        public static string[] cCurrencies = new string[] { "BTC","ETH", "LTC", "DOGE","DASH","BCH","XMR","XRP","ETC","BTG","XLM","ZEC","USDT","DTP" };
+        public static string[] cCurrencies = new string[] { "BTC","ETH", "LTC", "DOGE","DASH","BCH","XMR","XRP","ETC","BTG","XLM","ZEC","USDT","DTP","SHIB","TRX" };
         string[] mirrors = new string[] {"https://duckdice.io/", "https://duckdice.me", "https://duckdice.net" };
         private int mod;
         string apiversion = "1.1.1";
