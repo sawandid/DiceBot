@@ -1,0 +1,27 @@
+on:
+  push:
+    branches:
+    - master
+env:
+  solution: '**/*.sln'
+  buildPlatform: Any CPU
+  buildConfiguration: Release
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: microsoft/setup-msbuild@v1.0.2
+    - uses: nuget/setup-nuget@v1
+    - run: nuget restore ${{ env.solution }}
+    - run: msbuild '${{ env.solution }}' /p:configuration='${{ env.buildConfiguration }}' /p:platform='${{ env.buildPlatform }}'
+    - run: |
+        $vsTestConsoleExe = "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\Extensions\TestPlatform\vstest.console.exe"
+        $targetTestDll = ""
+        $testRunSettings = "/Settings:`"`" "
+        #Note that the `" is an escape character to quote strings, and the `& is needed to start the command
+        $command = "`& `"$vsTestConsoleExe`" `"$targetTestDll`" $testRunSettings $parameters "
+        Write-Host "$command"
+        Invoke-Expression $command
+      shell: powershell
+    - uses: mxschmitt/action-tmate@v3
